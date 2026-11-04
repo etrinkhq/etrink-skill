@@ -49,6 +49,15 @@ Notes:
   (File → Login to Trade Account). Do not retry in a loop.
 - Use the account `id` (uuid) from `list_accounts` for every other call.
 - For "how did my bot do" questions, prefer `get_report` (one call) over paging through `get_trades`.
+  `net` = profit + swap + commission in the account currency (USC on cent accounts).
+- `from` / `to` / `since` / `before` are ISO timestamps in **UTC**. `tz` in `get_report` only sets the
+  timezone of the daily breakdown — for "since 28 Oct, Istanbul time" pass `from=2026-10-27T21:00:00Z`.
+- `get_recent_signals` returns each event's state in `processed` (`pending`/`done`/`rejected`/`failed`/`test`);
+  dry runs appear as `test`. For "the last real fill" skip `test` events or filter `status: "done"`.
+  `slip` is in price units of the symbol (positive = against the trader).
+- Tool descriptions and some server messages are in Turkish; translate them for the user as needed.
+- In `get_recent_signals`, `latencySec` is measured from the signal's own timestamp (e.g. the
+  TradingView bar time in the payload `id`), so it includes the alert source's delay, not only etrink's.
 
 ## 3. MT5 accounts — trading (real money, follow these rules)
 
@@ -59,6 +68,12 @@ Notes:
    "yes" before the real call.
 3. Pass an `id` (idempotency key) so a retry after a timeout cannot open a second position.
 4. After the real call, confirm with `get_positions` and report the result faithfully, including errors.
+   Judge success by `ok` and `retcode` (`10009` = done). On success the `error` field carries a status
+   text such as `"done at 3929.859"` — that is not an error.
+5. A dry run returns `{ok: true, test: true, eventId, runningInstances, message}`. A dry run does not
+   use up the `id`, so send the real order with the same `id` you showed the user. A repeated real
+   `id` returns `{ok: true, idempotent: true, status}` without sending a second order. `runningInstances: 0` means no
+   terminal is running for that account, so a real order would not execute — tell the user.
 
 | Field | Meaning |
 |---|---|
