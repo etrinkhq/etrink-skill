@@ -27,7 +27,3 @@ Then follow section 1 of [`etrink/SKILL.md`](etrink/SKILL.md) to create an API k
 - Your API key stays in your own env/.env file; the skill tells Claude never to print or commit it.
 - Claude only trades on your explicit instruction, always dry-runs first (`test: true`) and asks for confirmation.
 - Server-side limits (max volume, allowed symbols, plan limits, idempotency) apply to every order.
-
-## License
-
-MIT
