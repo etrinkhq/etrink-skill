@@ -14,7 +14,7 @@ It uses the etrink MCP server; the skill explains setup, tool usage and safety r
 
 **Claude Code**
 ```bash
-git clone <this repo> /tmp/etrink-skill
+git clone https://github.com/etrink/etrink-skill.git /tmp/etrink-skill
 mkdir -p ~/.claude/skills && cp -r /tmp/etrink-skill/etrink ~/.claude/skills/
 ```
 
