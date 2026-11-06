@@ -1,7 +1,7 @@
-# etrink skill for Claude
+# etrink skill for AI agents
 
-A [Claude skill](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) that teaches Claude
-(Claude Code, Claude Desktop, Claude.ai) to work with an [etrink](https://etrink.com) account:
+A skill that teaches an AI agent (Claude, OpenAI Codex, Gemini CLI, Cursor and any other MCP-capable
+assistant) to work with an [etrink](https://etrink.com) account:
 
 - **MT5 accounts:** list accounts, balances and open positions, closed-trade reports, signal history,
   and (with your confirmation) place or close orders.
@@ -9,21 +9,27 @@ A [Claude skill](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/o
   build logs, runtime logs, env vars, restart, rollback.
 
 It uses the etrink MCP server; the skill explains setup, tool usage and safety rules.
+The skill follows the open [Agent Skills](https://agentskills.io) format (`etrink/SKILL.md` with YAML front matter),
+so the same folder works in every client that supports skills. [`AGENTS.md`](AGENTS.md) points other agents to it.
 
 ## Install
 
-**Claude Code**
 ```bash
-git clone https://github.com/etrink/etrink-skill.git /tmp/etrink-skill
-mkdir -p ~/.claude/skills && cp -r /tmp/etrink-skill/etrink ~/.claude/skills/
+git clone https://github.com/etrinkhq/etrink-skill.git
 ```
 
-**Claude.ai / Claude Desktop:** zip the `etrink` folder and upload it under Settings → Capabilities → Skills.
+| Client | Install |
+|---|---|
+| **Claude Code** | `mkdir -p ~/.claude/skills && cp -r etrink-skill/etrink ~/.claude/skills/` |
+| **Claude.ai / Claude Desktop** | Zip the `etrink` folder and upload it under Settings → Capabilities → Skills |
+| **OpenAI Codex CLI** | `mkdir -p ~/.codex/skills && cp -r etrink-skill/etrink ~/.codex/skills/` |
+| **Gemini CLI, Cursor, Windsurf, Copilot, others** | Copy `etrink/` into your project (or the client's skills/rules folder) and keep [`AGENTS.md`](AGENTS.md) at the project root — or paste `etrink/SKILL.md` into the client's custom instructions |
 
-Then follow section 1 of [`etrink/SKILL.md`](etrink/SKILL.md) to create an API key and register the MCP server.
+Then follow section 1 of [`etrink/SKILL.md`](etrink/SKILL.md) to create an API key and register the MCP server
+(commands for Claude, Codex, Gemini CLI, Cursor and generic MCP clients are included).
 
 ## Safety
 
-- Your API key stays in your own env/.env file; the skill tells Claude never to print or commit it.
-- Claude only trades on your explicit instruction, always dry-runs first (`test: true`) and asks for confirmation.
+- Your API key stays in your own env/.env file; the skill tells the agent never to print or commit it.
+- The agent only trades on your explicit instruction, always dry-runs first (`test: true`) and asks for confirmation.
 - Server-side limits (max volume, allowed symbols, plan limits, idempotency) apply to every order.

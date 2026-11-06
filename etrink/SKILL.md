@@ -21,15 +21,28 @@ customer's API key.
    ```bash
    curl -o etrink-mcp.mjs https://etrink.com/downloads/etrink-mcp.mjs
    ```
-3. Register it:
+3. Register it in the user's AI client (any MCP-capable client works; the server is a plain stdio MCP server):
    ```bash
    # Claude Code (key read from a .env file that contains ETRINK_API_KEY=...)
    claude mcp add --scope user etrink -e ETRINK_ENV_FILE=/full/path/.env -- node /full/path/etrink-mcp.mjs
    # or pass the key directly
    claude mcp add etrink -e ETRINK_API_KEY=etrk_mcp_... -- node /full/path/etrink-mcp.mjs
    ```
-   Claude Desktop: add the same `command`/`args`/`env` under `mcpServers.etrink` in
-   `claude_desktop_config.json`, then restart the app.
+   - **Claude Desktop:** add the same `command`/`args`/`env` under `mcpServers.etrink` in
+     `claude_desktop_config.json`, then restart the app.
+   - **OpenAI Codex CLI:** in `~/.codex/config.toml`:
+     ```toml
+     [mcp_servers.etrink]
+     command = "node"
+     args = ["/full/path/etrink-mcp.mjs"]
+     env = { ETRINK_ENV_FILE = "/full/path/.env" }
+     ```
+   - **Gemini CLI** (`~/.gemini/settings.json`), **Cursor** (`~/.cursor/mcp.json`), **Windsurf**, **VS Code / Copilot**
+     and other MCP clients: the same server under their `mcpServers` key:
+     ```json
+     { "mcpServers": { "etrink": { "command": "node", "args": ["/full/path/etrink-mcp.mjs"],
+                                    "env": { "ETRINK_ENV_FILE": "/full/path/.env" } } } }
+     ```
 4. Check: call `list_accounts` (or `list_services` for a services-only key).
 
 ## 2. MT5 accounts — reading (safe, use freely)
