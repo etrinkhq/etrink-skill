@@ -1,0 +1,27 @@
+{
+  "name": "etrink-mcp",
+  "version": "0.3.0",
+  "description": "MCP server for etrink: cloud MetaTrader 5 accounts (balances, positions, trade reports, signals, orders) and 24/7 bot hosting for Claude, Codex, Cursor and other AI agents.",
+  "mcpName": "io.github.etrinkhq/etrink",
+  "type": "module",
+  "bin": { "etrink-mcp": "dist/etrink-mcp.mjs" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node dist/etrink-mcp.mjs",
+    "prepublishOnly": "node build.mjs"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "dotenv": "^16.6.1",
+    "esbuild": "^0.25.12",
+    "zod": "^3.25.76"
+  },
+  "engines": { "node": ">=18" },
+  "keywords": ["mcp", "mcp-server", "model-context-protocol", "metatrader5", "mt5", "trading", "forex", "expert-advisor", "trading-bot", "claude", "codex", "cursor", "etrink"],
+  "homepage": "https://etrink.com/mcp",
+  "repository": { "type": "git", "url": "git+https://github.com/etrinkhq/etrink-skill.git", "directory": "mcp" },
+  "bugs": { "url": "https://github.com/etrinkhq/etrink-skill/issues" },
+  "author": "etrink <support@etrink.com>",
+  "license": "MIT"
+}
