@@ -26,7 +26,9 @@ assistant) to work with an [etrink](https://etrink.com) account:
 - **Service hosting:** create, deploy and operate a Python / Node.js / Go / Rust bot 24/7 —
   build logs, runtime logs, env vars, restart, rollback.
 
-It uses the etrink MCP server; the skill explains setup, tool usage and safety rules.
+It uses the etrink MCP server — npm package [`etrink-mcp`](https://www.npmjs.com/package/etrink-mcp)
+(`npx -y etrink-mcp`), source in [`mcp/`](mcp/) (MIT, stdio, 23 tools); the skill explains setup, tool usage and
+safety rules.
 The skill follows the open [Agent Skills](https://agentskills.io) format (`etrink/SKILL.md` with YAML front matter),
 so the same folder works in every client that supports skills. [`AGENTS.md`](AGENTS.md) points other agents to it.
 

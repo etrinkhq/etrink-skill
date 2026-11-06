@@ -17,30 +17,30 @@ customer's API key.
    - MT5 tools need the default scope; service tools need the **Services** scope.
    - The key (`etrk_mcp_...`) is shown once. Ask the user to put it in an env var or `.env` file —
      never paste it into chat, code, commits or logs.
-2. Download the single-file MCP server (Node.js 18+, no dependencies):
-   ```bash
-   curl -o etrink-mcp.mjs https://etrink.com/downloads/etrink-mcp.mjs
-   ```
-3. Register it in the user's AI client (any MCP-capable client works; the server is a plain stdio MCP server):
+2. The MCP server is the npm package [`etrink-mcp`](https://www.npmjs.com/package/etrink-mcp)
+   (Node.js 18+, stdio, no runtime dependencies) — `npx -y etrink-mcp` runs it, nothing else to install.
+   Without npm: `curl -o etrink-mcp.mjs https://etrink.com/downloads/etrink-mcp.mjs` and use
+   `node /full/path/etrink-mcp.mjs` as the command instead.
+3. Register it in the user's AI client (any MCP-capable client works):
    ```bash
    # Claude Code (key read from a .env file that contains ETRINK_API_KEY=...)
-   claude mcp add --scope user etrink -e ETRINK_ENV_FILE=/full/path/.env -- node /full/path/etrink-mcp.mjs
+   claude mcp add --scope user etrink -e ETRINK_ENV_FILE=/full/path/.env -- npx -y etrink-mcp
    # or pass the key directly
-   claude mcp add etrink -e ETRINK_API_KEY=etrk_mcp_... -- node /full/path/etrink-mcp.mjs
+   claude mcp add etrink -e ETRINK_API_KEY=etrk_mcp_... -- npx -y etrink-mcp
    ```
    - **Claude Desktop:** add the same `command`/`args`/`env` under `mcpServers.etrink` in
      `claude_desktop_config.json`, then restart the app.
    - **OpenAI Codex CLI:** in `~/.codex/config.toml`:
      ```toml
      [mcp_servers.etrink]
-     command = "node"
-     args = ["/full/path/etrink-mcp.mjs"]
+     command = "npx"
+     args = ["-y", "etrink-mcp"]
      env = { ETRINK_ENV_FILE = "/full/path/.env" }
      ```
    - **Gemini CLI** (`~/.gemini/settings.json`), **Cursor** (`~/.cursor/mcp.json`), **Windsurf**, **VS Code / Copilot**
      and other MCP clients: the same server under their `mcpServers` key:
      ```json
-     { "mcpServers": { "etrink": { "command": "node", "args": ["/full/path/etrink-mcp.mjs"],
+     { "mcpServers": { "etrink": { "command": "npx", "args": ["-y", "etrink-mcp"],
                                     "env": { "ETRINK_ENV_FILE": "/full/path/.env" } } } }
      ```
 4. Check: call `list_accounts` (or `list_services` for a services-only key).
