@@ -33,3 +33,7 @@ Then follow section 1 of [`etrink/SKILL.md`](etrink/SKILL.md) to create an API k
 - Your API key stays in your own env/.env file; the skill tells the agent never to print or commit it.
 - The agent only trades on your explicit instruction, always dry-runs first (`test: true`) and asks for confirmation.
 - Server-side limits (max volume, allowed symbols, plan limits, idempotency) apply to every order.
+
+## License
+
+[MIT](LICENSE). The skill files are free to use and adapt; using etrink itself requires an etrink account.
